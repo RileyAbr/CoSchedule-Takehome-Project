@@ -3,9 +3,10 @@
     "plugins": ["jsx-a11y", "prettier"],
     "rules": {
         "prettier/prettier": [
-            "error",
+            "warn",
             {
-                "endOfLine": "auto"
+                "endOfLine": "auto",
+                "tabWidth": 4
             }
         ]
     }

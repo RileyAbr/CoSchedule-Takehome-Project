@@ -1,24 +1,51 @@
-import logo from "./logo.svg";
-import "./App.css";
+import { Route, Switch } from "react-router-dom";
+import AuthRoute from "./components/routing/AuthRoute";
+
+import Login from "./components/pages/authentication/Login";
+import SignUp from "./components/pages/authentication/SignUp";
+import Gallery from "./components/pages/Gallery";
+import Detail from "./components/pages/Detail";
+
+import AuthPage from "./components/AuthPage";
+
+import { readAuthToken } from "./services/storage.auth.service";
+
+const isAuthenticated = readAuthToken() ? true : false;
 
 function App() {
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
-        </div>
+        <>
+            <Switch>
+                <Route
+                    path="/login"
+                    render={() => (
+                        <AuthPage>
+                            <Login />
+                        </AuthPage>
+                    )}
+                />
+                <Route
+                    path="/signup"
+                    render={() => (
+                        <AuthPage>
+                            <SignUp />
+                        </AuthPage>
+                    )}
+                />
+                <AuthRoute
+                    authed={isAuthenticated}
+                    exact={true}
+                    path="/"
+                    component={Gallery}
+                />
+                <AuthRoute
+                    authed={isAuthenticated}
+                    path="/:id"
+                    component={Detail}
+                />
+                <AuthRoute authed={isAuthenticated} component={Gallery} />
+            </Switch>
+        </>
     );
 }
 
