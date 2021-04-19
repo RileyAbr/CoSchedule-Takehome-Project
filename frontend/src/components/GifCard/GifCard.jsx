@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
 import { Box, Flex, Button, Heading, Image } from "@chakra-ui/react";
 import LoadingGif from "../LoadingGif";
-import { postNewGIPHYRanking } from "../../services/api.service";
+import {
+    postNewGIPHYRanking,
+    patchNewGIPHYRanking,
+} from "../../services/api.service";
 import { calculateStarRating } from "../../services/utils";
 
 const GifCard = ({ id, url, title }) => {
     const [gifDetails, setGifDetails] = useState();
     const [isCreated, setIsCreated] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [thumbSelected, setThumbSelected] = useState(0);
 
     const getGIPHYRanking = async (newRanking) => {
         const data = await postNewGIPHYRanking(newRanking);
@@ -15,12 +19,51 @@ const GifCard = ({ id, url, title }) => {
         setGifDetails(data);
     };
 
+    const handleThumbClick = async (rankingValue) => {
+        let newGifDetails = gifDetails;
+        if (newGifDetails.rankings === undefined) {
+            newGifDetails.rankings = {
+                oneStar: 0,
+                twoStar: 0,
+                threeStar: 0,
+                fourStar: 0,
+                fiveStar: 0,
+            };
+        }
+
+        switch (rankingValue) {
+            case 1:
+                newGifDetails.rankings.oneStar += 1;
+                break;
+            case 2:
+                newGifDetails.rankings.twoStar += 1;
+                break;
+            case 3:
+                newGifDetails.rankings.threeStar += 1;
+                break;
+            case 4:
+                newGifDetails.rankings.fourStar += 1;
+                break;
+            case 5:
+                newGifDetails.rankings.fiveStar += 1;
+                break;
+            default:
+                break;
+        }
+
+        setThumbSelected(rankingValue);
+        patchGIPHYRanking(newGifDetails);
+    };
+
+    const patchGIPHYRanking = async (newRanking) => {
+        await patchNewGIPHYRanking(newRanking);
+
+        setGifDetails(newRanking);
+    };
+
     useEffect(() => {
-        const newRanking = {
-            gifID: id,
-        };
         if (!isCreated) {
-            getGIPHYRanking(newRanking);
+            getGIPHYRanking({ gifID: id });
             setIsCreated(true);
         }
     }, [id, isCreated, gifDetails, getGIPHYRanking]);
@@ -67,14 +110,23 @@ const GifCard = ({ id, url, title }) => {
                         )}
                         <Box>
                             {[...Array(5)].map((x, i) => (
-                                <span
-                                    role="img"
-                                    aria-label="A thumbs-up"
-                                    style={{ filter: "grayscale(100%)" }}
+                                <button
                                     key={i}
+                                    variant="ghost"
+                                    p="0"
+                                    height="min-content"
+                                    width="min-content"
+                                    onClick={() => handleThumbClick(i + 1)}
+                                    style={
+                                        i >= thumbSelected
+                                            ? { filter: "grayscale(100%)" }
+                                            : { filter: "grayscale(0)" }
+                                    }
                                 >
-                                    👍
-                                </span>
+                                    <span role="img" aria-label="A thumbs-up">
+                                        👍
+                                    </span>
+                                </button>
                             ))}
                         </Box>
                     </Flex>

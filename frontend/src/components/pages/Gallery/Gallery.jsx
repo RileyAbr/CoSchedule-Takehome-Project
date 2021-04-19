@@ -21,7 +21,7 @@ const Gallery = () => {
         const data = await getGIPHYTrending();
 
         if (data.meta.status === 200) {
-            setGifList(data.data.slice(0, 1));
+            setGifList(data.data);
         } else {
             console.error("GIPHY could not be reached.");
         }

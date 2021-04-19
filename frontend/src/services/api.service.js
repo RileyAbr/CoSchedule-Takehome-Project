@@ -76,6 +76,31 @@ const postNewGIPHYRanking = async (data) => {
         });
 };
 
+const patchNewGIPHYRanking = async (data) => {
+    return fetch(
+        `https://giphy-gallery-server.herokuapp.com/rankings/${data.gifID}`,
+        {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        }
+    )
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            return data;
+        })
+        .catch((error) => {
+            return error;
+        });
+};
+
 const getGIPHYTrending = async () =>
     fetch("https://giphy-gallery-server.herokuapp.com/trending", {
         method: "GET",
@@ -113,6 +138,7 @@ export {
     postLogin,
     postSignUp,
     postNewGIPHYRanking,
+    patchNewGIPHYRanking,
     getGIPHYRanking,
     getGIPHYTrending,
     searchGIPHY,

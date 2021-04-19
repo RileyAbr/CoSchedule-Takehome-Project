@@ -22,6 +22,8 @@ const calculateStarRating = (starRankings) => {
             starCounts[3] +
             starCounts[4]);
 
+    if (isNaN(rankValue)) return 0;
+
     return Math.round(rankValue * 10) / 10;
 };
 
