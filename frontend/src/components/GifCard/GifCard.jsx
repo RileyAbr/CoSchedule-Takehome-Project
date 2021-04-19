@@ -92,9 +92,6 @@ const GifCard = ({ id, url, title }) => {
                 />
                 <Box px={3} pb={3}>
                     <Heading size="md" py="1">
-                        {id}
-                    </Heading>
-                    <Heading size="md" py="1">
                         {title || "Animated Gif"}
                     </Heading>
                     <Flex pt="2" pb="3" justifyContent="space-between">
