@@ -1,6 +1,6 @@
 import { Box, Button, Heading, Image } from "@chakra-ui/react";
 
-const GifCard = ({ url, title }) => {
+const GifCard = ({ id, url, title }) => {
     return (
         <>
             <Box

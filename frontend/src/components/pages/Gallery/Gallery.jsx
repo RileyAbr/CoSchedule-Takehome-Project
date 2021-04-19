@@ -35,6 +35,7 @@ const Gallery = () => {
                         <>
                             <WrapItem key={i}>
                                 <GifCard
+                                    id={gif.id}
                                     url={gif.images.original.url}
                                     title={gif.title}
                                 />
