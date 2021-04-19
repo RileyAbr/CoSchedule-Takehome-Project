@@ -8,6 +8,7 @@ const app = express();
 const AuthRouter = require("./routes/auth.route");
 const UsersRouter = require("./routes/users.route");
 const GIPHYRouter = require("./routes/giphy.route");
+const RankingsRouter = require("./routes/rankings.route");
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -32,6 +33,7 @@ app.use(bodyParser.json());
 UsersRouter.routesConfig(app);
 AuthRouter.routesConfig(app);
 GIPHYRouter.routesConfig(app);
+RankingsRouter.routesConfig(app);
 
 app.listen(process.env.PORT, function () {
     console.log(

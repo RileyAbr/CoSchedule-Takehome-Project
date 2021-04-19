@@ -4,7 +4,6 @@ import AuthRoute from "./components/routing/AuthRoute";
 import Login from "./components/pages/authentication/Login";
 import SignUp from "./components/pages/authentication/SignUp";
 import Gallery from "./components/pages/Gallery";
-import Detail from "./components/pages/Detail";
 
 import AuthPage from "./components/AuthPage";
 
@@ -43,11 +42,6 @@ function App() {
                     exact={true}
                     path="/gallery"
                     component={Gallery}
-                />
-                <AuthRoute
-                    authed={isAuthenticated}
-                    path="/:id"
-                    component={Detail}
                 />
                 <AuthRoute authed={isAuthenticated} component={Gallery} />
             </Switch>
