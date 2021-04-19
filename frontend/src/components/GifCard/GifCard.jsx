@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, Button, Heading, Image } from "@chakra-ui/react";
+import { Box, Flex, Button, Heading, Image } from "@chakra-ui/react";
 import LoadingGif from "../LoadingGif";
 
 const GifCard = ({ id, url, title }) => {
@@ -32,26 +32,30 @@ const GifCard = ({ id, url, title }) => {
                     display={isLoaded ? "block" : "none"}
                 />
                 <Box px={3} pb={3}>
-                    <Heading>{title || "Animated Gif"}</Heading>
-                    <Box>
-                        Ranking 0/5{" "}
-                        <span role="img" aria-label="A thumbs-up">
-                            👍
-                        </span>
-                    </Box>
-                    <Box>
-                        {[...Array(5)].map((x, i) => (
-                            <span
-                                role="img"
-                                aria-label="A thumbs-up"
-                                style={{ filter: "grayscale(100%)" }}
-                                key={i}
-                            >
+                    <Heading size="md" py="1">
+                        {title || "Animated Gif"}
+                    </Heading>
+                    <Flex pt="2" pb="3" justifyContent="space-between">
+                        <Box>
+                            Ranking: 0/5{" "}
+                            <span role="img" aria-label="A thumbs-up">
                                 👍
                             </span>
-                        ))}
-                    </Box>
-                    <Button>
+                        </Box>
+                        <Box>
+                            {[...Array(5)].map((x, i) => (
+                                <span
+                                    role="img"
+                                    aria-label="A thumbs-up"
+                                    style={{ filter: "grayscale(100%)" }}
+                                    key={i}
+                                >
+                                    👍
+                                </span>
+                            ))}
+                        </Box>
+                    </Flex>
+                    <Button display="block" margin="0 auto">
                         <span
                             role="img"
                             aria-label="A speech button with an ellipses in it"
