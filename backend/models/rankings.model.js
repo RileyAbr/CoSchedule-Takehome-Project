@@ -3,14 +3,6 @@ const isAlphanumeric = require("validator").isAlphanumeric;
 
 const Schema = mongoose.Schema;
 
-const ranksSchema = new Schema({
-    oneStar: Number,
-    twoStar: Number,
-    threeStar: Number,
-    fourStar: Number,
-    fiveStar: Number
-});
-
 const commentSchema = new Schema({
     author: {
         type: String,
@@ -29,7 +21,13 @@ const rankingSchema = new Schema(
             required: true,
             validate: [isAlphanumeric, "Only letters and numbers are permitted"]
         },
-        rankings: ranksSchema,
+        rankings: {
+            oneStar: { type: Number, default: 0 },
+            twoStar: { type: Number, default: 0 },
+            threeStar: { type: Number, default: 0 },
+            fourStar: { type: Number, default: 0 },
+            fiveStar: { type: Number, default: 0 }
+        },
         comments: [commentSchema]
     },
     { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
@@ -64,7 +62,11 @@ exports.findByGifID = (gifID) => {
 };
 
 exports.createRanking = (rankingData) => {
-    const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+    const options = {
+        new: true,
+        upsert: true,
+        setDefaultsOnInsert: true
+    };
     return Ranking.findOneAndUpdate(
         {
             gifID: rankingData.gifID
