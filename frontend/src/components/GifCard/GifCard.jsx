@@ -1,13 +1,29 @@
 import { useState, useEffect } from "react";
 import { Box, Flex, Button, Heading, Image } from "@chakra-ui/react";
 import LoadingGif from "../LoadingGif";
+import { postNewGIPHYRanking } from "../../services/api.service";
+import { calculateStarRating } from "../../services/utils";
 
 const GifCard = ({ id, url, title }) => {
+    const [gifDetails, setGifDetails] = useState();
+    const [isCreated, setIsCreated] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
+    const getGIPHYRanking = async (newRanking) => {
+        const data = await postNewGIPHYRanking(newRanking);
+
+        setGifDetails(data);
+    };
+
     useEffect(() => {
-        setIsLoaded(false);
-    }, [url]);
+        const newRanking = {
+            gifID: id,
+        };
+        if (!isCreated) {
+            getGIPHYRanking(newRanking);
+            setIsCreated(true);
+        }
+    }, [id, isCreated, gifDetails, getGIPHYRanking]);
 
     const removePlaceholder = () => {
         setIsLoaded(true);
@@ -39,12 +55,16 @@ const GifCard = ({ id, url, title }) => {
                         {title || "Animated Gif"}
                     </Heading>
                     <Flex pt="2" pb="3" justifyContent="space-between">
-                        <Box>
-                            Ranking: 0/5{" "}
-                            <span role="img" aria-label="A thumbs-up">
-                                👍
-                            </span>
-                        </Box>
+                        {gifDetails && (
+                            <Box>
+                                Ranking:{" "}
+                                {calculateStarRating(gifDetails.rankings)}
+                                /5{" "}
+                                <span role="img" aria-label="A thumbs-up">
+                                    👍
+                                </span>
+                            </Box>
+                        )}
                         <Box>
                             {[...Array(5)].map((x, i) => (
                                 <span

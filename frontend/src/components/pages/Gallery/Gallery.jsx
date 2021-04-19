@@ -21,7 +21,7 @@ const Gallery = () => {
         const data = await getGIPHYTrending();
 
         if (data.meta.status === 200) {
-            setGifList(data.data);
+            setGifList(data.data.slice(0, 1));
         } else {
             console.error("GIPHY could not be reached.");
         }
@@ -49,7 +49,7 @@ const Gallery = () => {
                     {gifList ? (
                         gifList.map((gif, i) => (
                             <>
-                                <WrapItem key={i}>
+                                <WrapItem>
                                     <GifCard
                                         id={gif.id}
                                         url={gif.images.original.url}
