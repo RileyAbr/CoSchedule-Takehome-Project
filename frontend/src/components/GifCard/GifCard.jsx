@@ -29,6 +29,7 @@ const GifCard = ({ id, url, title }) => {
                     borderTopRadius="8px"
                     w="100%"
                     onLoad={removePlaceholder}
+                    display={isLoaded ? "block" : "none"}
                 />
                 <Box px={3} pb={3}>
                     <Heading>{title || "Animated Gif"}</Heading>
