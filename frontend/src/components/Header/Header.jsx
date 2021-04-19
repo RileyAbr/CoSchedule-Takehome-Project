@@ -1,4 +1,4 @@
-import { Flex, Spacer } from "@chakra-ui/react";
+import { Flex, Box, Input, Text } from "@chakra-ui/react";
 
 import HeaderLogo from "../HeaderLogo";
 import HeaderLogOutButton from "../HeaderLogOutButton";
@@ -12,11 +12,10 @@ const Header = () => {
             py="2"
             px="4"
             alignItems="center"
+            justifyContent="space-between"
             position="fixed"
         >
             <HeaderLogo />
-
-            <Spacer />
 
             <HeaderLogOutButton />
         </Flex>
