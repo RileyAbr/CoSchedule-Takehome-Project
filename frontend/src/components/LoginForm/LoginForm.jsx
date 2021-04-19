@@ -19,12 +19,6 @@ const LoginForm = (props) => {
     const [accessToken, setAccessToken] = useState();
     const history = useHistory();
 
-    useEffect(() => {
-        if (accessToken) {
-            history.push("/gallery");
-        }
-    });
-
     const logIn = async (email, password) => {
         const data = await postLogin({
             email: email,
@@ -33,6 +27,7 @@ const LoginForm = (props) => {
 
         if (data.accessToken) {
             setAccessToken(writeAuthToken("token", data.accessToken));
+            history.push("/gallery");
         } else {
             alert("Incorrect username or password");
         }
