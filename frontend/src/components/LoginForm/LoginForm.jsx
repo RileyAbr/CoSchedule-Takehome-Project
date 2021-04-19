@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
     Box,
     Text,
@@ -16,7 +15,6 @@ import { writeAuthToken } from "../../services/storage.auth.service";
 import { postLogin } from "../../services/api.service";
 
 const LoginForm = (props) => {
-    const [accessToken, setAccessToken] = useState();
     const history = useHistory();
 
     const logIn = async (email, password) => {
@@ -26,7 +24,7 @@ const LoginForm = (props) => {
         });
 
         if (data.accessToken) {
-            setAccessToken(writeAuthToken("token", data.accessToken));
+            writeAuthToken("token", data.accessToken);
             history.push("/gallery");
         } else {
             alert("Incorrect username or password");

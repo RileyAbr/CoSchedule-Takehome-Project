@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Box, Flex, Button, Heading, Image } from "@chakra-ui/react";
 import LoadingGif from "../LoadingGif";
 import {
@@ -13,11 +13,11 @@ const GifCard = ({ id, url, title }) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [thumbSelected, setThumbSelected] = useState(0);
 
-    const getGIPHYRanking = async (newRanking) => {
+    const getGIPHYRanking = useCallback(async (newRanking) => {
         const data = await postNewGIPHYRanking(newRanking);
 
         setGifDetails(data);
-    };
+    }, []);
 
     const handleThumbClick = async (rankingValue) => {
         let newGifDetails = gifDetails;
