@@ -36,7 +36,7 @@ const SearchBar = ({ onSubmit, onReset }) => {
                 <Button type="submit" ml="2">
                     Search!
                 </Button>
-                <Button type="reset" ml="2">
+                <Button type="reset" variant="outline" ml="2">
                     Clear
                 </Button>
             </Flex>
