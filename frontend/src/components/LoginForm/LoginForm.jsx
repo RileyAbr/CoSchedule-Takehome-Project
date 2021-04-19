@@ -12,20 +12,26 @@ import {
 import { useHistory, Link as RouterLink } from "react-router-dom";
 import PasswordField from "../PasswordField";
 import { writeAuthToken } from "../../services/storage.auth.service";
+import { postLogin } from "../../services/api.service";
 
 const LoginForm = (props) => {
     const history = useHistory();
 
-    const logIn = () => {
-        writeAuthToken("mock");
+    const logIn = async (email, password) => {
+        const data = await postLogin({
+            email: email,
+            password: password,
+        });
+
+        writeAuthToken("token", data.accessToken);
         history.push("/");
     };
 
     return (
         <chakra.form
             onSubmit={(e) => {
-                e.preventDefault(); // your login logic here
-                logIn();
+                e.preventDefault();
+                logIn(e.target[0].value, e.target[2].value);
             }}
             {...props}
         >

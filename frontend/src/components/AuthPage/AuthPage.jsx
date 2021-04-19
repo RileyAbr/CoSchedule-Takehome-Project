@@ -8,7 +8,7 @@ const AuthPage = (props) => {
         new Granim({
             element: "#auth-background",
             direction: "radial",
-            isPausedWhenNotInView: false,
+            isPausedWhenNotInView: true,
             states: {
                 "default-state": {
                     gradients: [
