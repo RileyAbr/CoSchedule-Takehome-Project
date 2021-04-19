@@ -66,6 +66,9 @@ const GifCard = ({ id, url, title }) => {
             getGIPHYRanking({ gifID: id });
             setIsCreated(true);
         }
+        if (gifDetails && id !== gifDetails.gifId) {
+            setIsCreated(false);
+        }
     }, [id, isCreated, gifDetails, getGIPHYRanking]);
 
     const removePlaceholder = () => {
