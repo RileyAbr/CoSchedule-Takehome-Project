@@ -1,6 +1,30 @@
 import { useState, useEffect, useCallback } from "react";
-import { Box, Flex, Button, Heading, Image } from "@chakra-ui/react";
+import {
+    Box,
+    Flex,
+    Button,
+    Heading,
+    Image,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    useDisclosure,
+    Text,
+    FormControl,
+    FormLabel,
+    Input,
+    chakra,
+    Divider,
+    Stack,
+    Radio,
+    RadioGroup,
+} from "@chakra-ui/react";
 import LoadingGif from "../LoadingGif";
+// import CommentsModal from "../CommentsModal";
 import {
     postNewGIPHYRanking,
     patchNewGIPHYRanking,
@@ -12,6 +36,7 @@ const GifCard = ({ id, url, title }) => {
     const [isCreated, setIsCreated] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const [thumbSelected, setThumbSelected] = useState(0);
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const getGIPHYRanking = useCallback(async (newRanking) => {
         const data = await postNewGIPHYRanking(newRanking);
@@ -55,6 +80,17 @@ const GifCard = ({ id, url, title }) => {
         patchGIPHYRanking(newGifDetails);
     };
 
+    const handleNewComment = async (commentBody) => {
+        let newGifDetails = gifDetails;
+
+        gifDetails.comments.push({
+            author: "anonymous",
+            body: commentBody,
+        });
+
+        patchGIPHYRanking(newGifDetails);
+    };
+
     const patchGIPHYRanking = async (newRanking) => {
         await patchNewGIPHYRanking(newRanking);
 
@@ -77,6 +113,73 @@ const GifCard = ({ id, url, title }) => {
 
     return (
         <>
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Here's What Everyone is Saying</ModalHeader>
+                    <Divider />
+                    <ModalCloseButton />
+                    <ModalBody>
+                        {gifDetails &&
+                            gifDetails.comments &&
+                            gifDetails.comments.map((comment, i) => {
+                                return (
+                                    <Box
+                                        key={i}
+                                        borderColor="gray.600"
+                                        borderStyle="solid"
+                                        borderBottom="1px"
+                                        py="3"
+                                    >
+                                        <Text fontSize="sm" color="gray.400">
+                                            - {comment.author}
+                                        </Text>
+
+                                        <Text fontSize="lg">
+                                            {comment.body}
+                                        </Text>
+                                    </Box>
+                                );
+                            })}
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <chakra.form
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                handleNewComment(e.target[0].value);
+                            }}
+                            w="100%"
+                        >
+                            <Box py="2">
+                                <FormControl id="comment">
+                                    <FormLabel>
+                                        What would you like to say?
+                                    </FormLabel>
+                                    <Input
+                                        name="comment"
+                                        type="text"
+                                        required
+                                    />
+                                </FormControl>
+                            </Box>
+                            <Flex justifyContent="flex-end">
+                                <Button
+                                    mr="3"
+                                    type="submit"
+                                    onSubmit={handleNewComment}
+                                >
+                                    Add Comment
+                                </Button>
+                                <Button variant="ghost" onClick={onClose}>
+                                    Cancel
+                                </Button>
+                            </Flex>
+                        </chakra.form>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+
             <Box
                 bg="gray.800"
                 w="300px"
@@ -130,7 +233,7 @@ const GifCard = ({ id, url, title }) => {
                             ))}
                         </Box>
                     </Flex>
-                    <Button display="block" margin="0 auto">
+                    <Button display="block" margin="0 auto" onClick={onOpen}>
                         <span
                             role="img"
                             aria-label="A speech button with an ellipses in it"
