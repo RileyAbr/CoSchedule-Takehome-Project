@@ -10,3 +10,14 @@ exports.trending = async (req, res) => {
         return res.status(200).send(result);
     });
 };
+
+exports.search = async (req, res) => {
+    let limit =
+        req.query.limit && req.query.limit <= 100
+            ? parseInt(req.query.limit)
+            : 15;
+
+    await GIPHYAPI.searchGIPHY(req.query.searchTerm, limit).then((result) => {
+        return res.status(200).send(result);
+    });
+};

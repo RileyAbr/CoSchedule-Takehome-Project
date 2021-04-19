@@ -8,4 +8,10 @@ exports.routesConfig = function (app) {
         // PermissionMiddleware.minimumPermissionLevelRequired(PAID),
         GIPHYController.trending
     ]);
+    app.get("/search", [
+        // This could be public later on
+        // ValidationMiddleware.validJWTNeeded,
+        // PermissionMiddleware.minimumPermissionLevelRequired(PAID),
+        GIPHYController.search
+    ]);
 };

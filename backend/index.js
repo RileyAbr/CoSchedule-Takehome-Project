@@ -5,11 +5,8 @@ const dotenv = require("dotenv").config();
 /* eslint-enable */
 const app = express();
 
-const UsersRouter = require("./routes/users.route");
 const AuthRouter = require("./routes/auth.route");
-const ParksRouter = require("./routes/parks.route");
-const DogsRouter = require("./routes/dogs.route");
-const CheckInRouter = require("./routes/checkin.route");
+const UsersRouter = require("./routes/users.route");
 const GIPHYRouter = require("./routes/giphy.route");
 
 app.use(function (req, res, next) {
@@ -34,9 +31,6 @@ app.use(function (req, res, next) {
 app.use(bodyParser.json());
 UsersRouter.routesConfig(app);
 AuthRouter.routesConfig(app);
-ParksRouter.routesConfig(app);
-DogsRouter.routesConfig(app);
-CheckInRouter.routesConfig(app);
 GIPHYRouter.routesConfig(app);
 
 app.listen(process.env.PORT, function () {
