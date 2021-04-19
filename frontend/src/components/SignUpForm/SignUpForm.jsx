@@ -24,7 +24,11 @@ const SignUpForm = (props) => {
             password: password,
         });
 
-        history.push("/login");
+        if (data.id) {
+            history.push("/login");
+        } else {
+            alert("Incorrect form info");
+        }
     };
 
     return (

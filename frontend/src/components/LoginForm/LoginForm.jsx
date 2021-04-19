@@ -31,7 +31,11 @@ const LoginForm = (props) => {
             password: password,
         });
 
-        setAccessToken(writeAuthToken("token", data.accessToken));
+        if (data.accessToken) {
+            setAccessToken(writeAuthToken("token", data.accessToken));
+        } else {
+            alert("Incorrect username or password");
+        }
     };
 
     return (
