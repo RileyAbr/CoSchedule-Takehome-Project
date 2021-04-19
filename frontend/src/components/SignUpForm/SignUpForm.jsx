@@ -11,21 +11,32 @@ import {
 } from "@chakra-ui/react";
 import { useHistory, Link as RouterLink } from "react-router-dom";
 import PasswordField from "../PasswordField";
-import { writeAuthToken } from "../../services/storage.auth.service";
+import { postSignUp } from "../../services/api.service.js";
 
 const SignUpForm = (props) => {
     const history = useHistory();
 
-    const signUp = () => {
-        writeAuthToken("mock");
-        history.push("/");
+    const signUp = async (firstName, lastName, email, password) => {
+        const data = await postSignUp({
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password,
+        });
+
+        history.push("/login");
     };
 
     return (
         <chakra.form
             onSubmit={(e) => {
-                e.preventDefault(); // your login logic here
-                signUp();
+                e.preventDefault();
+                signUp(
+                    e.target[0].value,
+                    e.target[1].value,
+                    e.target[2].value,
+                    e.target[4].value
+                );
             }}
             {...props}
         >

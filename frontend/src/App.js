@@ -40,6 +40,12 @@ function App() {
                 />
                 <AuthRoute
                     authed={isAuthenticated}
+                    exact={true}
+                    path="/gallery"
+                    component={Gallery}
+                />
+                <AuthRoute
+                    authed={isAuthenticated}
                     path="/:id"
                     component={Detail}
                 />

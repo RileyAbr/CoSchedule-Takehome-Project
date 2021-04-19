@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
     Box,
     Text,
@@ -15,7 +16,14 @@ import { writeAuthToken } from "../../services/storage.auth.service";
 import { postLogin } from "../../services/api.service";
 
 const LoginForm = (props) => {
+    const [accessToken, setAccessToken] = useState();
     const history = useHistory();
+
+    useEffect(() => {
+        if (accessToken) {
+            history.push("/gallery");
+        }
+    });
 
     const logIn = async (email, password) => {
         const data = await postLogin({
@@ -23,8 +31,7 @@ const LoginForm = (props) => {
             password: password,
         });
 
-        writeAuthToken("token", data.accessToken);
-        history.push("/");
+        setAccessToken(writeAuthToken("token", data.accessToken));
     };
 
     return (
