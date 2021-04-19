@@ -1,4 +1,4 @@
-import { Flex, Box, Input, Text } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 import HeaderLogo from "../HeaderLogo";
 import HeaderLogOutButton from "../HeaderLogOutButton";

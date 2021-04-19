@@ -50,4 +50,22 @@ const getGIPHYTrending = async () =>
             return error;
         });
 
-export { postLogin, postSignUp, getGIPHYTrending };
+const searchGIPHY = async (searchValue) =>
+    fetch(
+        `https://giphy-gallery-server.herokuapp.com/search?searchTerm=${searchValue}`,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }
+    )
+        .then((response) => response.json())
+        .then((data) => {
+            return data;
+        })
+        .catch((error) => {
+            return error;
+        });
+
+export { postLogin, postSignUp, getGIPHYTrending, searchGIPHY };
