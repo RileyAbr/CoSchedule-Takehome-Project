@@ -41,10 +41,17 @@ const Gallery = () => {
         searchGIPHYList(searchValue);
     };
 
+    const handleGIPHYSearchReset = () => {
+        getGIPHYTrendingList();
+    };
+
     return (
         <ContentPage>
             <Flex maxW="99%" pt="3" flexDir="column" alignItems="center">
-                <Searchbar onSubmit={handleGIPHYSearchSubmit} />
+                <Searchbar
+                    onSubmit={handleGIPHYSearchSubmit}
+                    onReset={handleGIPHYSearchReset}
+                />
                 <Wrap pt="3" spacing="30px" justify="center">
                     {gifList ? (
                         gifList.map((gif, i) => (
