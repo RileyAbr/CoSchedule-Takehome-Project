@@ -1,26 +1,6 @@
-import { useState, useEffect } from "react";
 import { Box, Button, Heading, Image } from "@chakra-ui/react";
 
-import LoadingGif from "../LoadingGif";
-
-const GifCard = () => {
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [gifData, setGifData] = useState();
-
-    useEffect(() => {
-        if (!isLoaded) {
-            fetch(
-                // "https://api.giphy.com/v1/gifs/qu97lsaw5GHfBdxQxf?api_key=WwQ361VAY9EkuZ2mWIJJbIYNy0eLJNr0"
-                "https://api.giphy.com/v1/gifs/zyNp2ChOYAeOc?api_key=WwQ361VAY9EkuZ2mWIJJbIYNy0eLJNr0"
-            )
-                .then((res) => res.json())
-                .then((result) => {
-                    setIsLoaded(true);
-                    setGifData(result.data);
-                });
-        }
-    });
-
+const GifCard = ({ url, title }) => {
     return (
         <>
             <Box
@@ -29,17 +9,14 @@ const GifCard = () => {
                 borderBottomRadius="15px"
                 borderTopRadius="8px"
             >
-                {gifData ? (
-                    <Image
-                        src={gifData.images.original.url}
-                        alt="Sample Gif"
-                        borderTopRadius="8px"
-                    />
-                ) : (
-                    <LoadingGif />
-                )}
+                <Image
+                    src={url}
+                    alt="Sample Gif"
+                    borderTopRadius="8px"
+                    w="100%"
+                />
                 <Box px={3} pb={3}>
-                    <Heading>{gifData?.title || "Animated Gif"}</Heading>
+                    <Heading>{title || "Animated Gif"}</Heading>
                     <Box>
                         Ranking 0/5{" "}
                         <span role="img" aria-label="A thumbs-up">
@@ -52,6 +29,7 @@ const GifCard = () => {
                                 role="img"
                                 aria-label="A thumbs-up"
                                 style={{ filter: "grayscale(100%)" }}
+                                key={i}
                             >
                                 👍
                             </span>

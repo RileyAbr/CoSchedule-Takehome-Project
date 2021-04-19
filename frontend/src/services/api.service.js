@@ -35,4 +35,19 @@ const postSignUp = async (data) =>
             return error;
         });
 
-export { postLogin, postSignUp };
+const getGIPHYTrending = async () =>
+    fetch("https://giphy-gallery-server.herokuapp.com/trending", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            return data;
+        })
+        .catch((error) => {
+            return error;
+        });
+
+export { postLogin, postSignUp, getGIPHYTrending };
