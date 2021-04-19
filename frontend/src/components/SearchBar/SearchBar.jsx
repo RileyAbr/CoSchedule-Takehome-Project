@@ -1,5 +1,5 @@
 import {
-    Center,
+    Flex,
     Button,
     Input,
     Text,
@@ -17,15 +17,22 @@ const SearchBar = ({ onSubmit }) => {
             w="100%"
             p="4"
         >
-            <Text px="3" fontSize="xl">
-                Need something more specific?{" "}
-            </Text>
-            <FormControl id="searchTerm">
-                <Input type="search" w="50%" />
-            </FormControl>
-            <Button type="submit" mx="2">
-                Search!
-            </Button>
+            <Flex
+                w="100%"
+                alignItems="center"
+                justifyContent="center"
+                flexFlow="row nowrap"
+            >
+                <Text px="3" fontSize="xl">
+                    Need something more specific?{" "}
+                </Text>
+                <FormControl id="searchTerm" w="50%">
+                    <Input type="search" />
+                </FormControl>
+                <Button type="submit" mx="2">
+                    Search!
+                </Button>
+            </Flex>
         </chakra.form>
     );
 };

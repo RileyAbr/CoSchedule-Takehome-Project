@@ -15,7 +15,6 @@ const Gallery = () => {
             getGIPHYTrendingList();
             setIsLoaded(true);
         }
-        console.log(gifList);
     }, [isLoaded, gifList]);
 
     const getGIPHYTrendingList = async () => {
