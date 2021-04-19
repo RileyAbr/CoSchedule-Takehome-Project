@@ -9,12 +9,7 @@ const GifCard = ({ url, title }) => {
                 borderBottomRadius="15px"
                 borderTopRadius="8px"
             >
-                <Image
-                    src={url}
-                    alt="Sample Gif"
-                    borderTopRadius="8px"
-                    w="100%"
-                />
+                <Image src={url} alt={title} borderTopRadius="8px" w="100%" />
                 <Box px={3} pb={3}>
                     <Heading>{title || "Animated Gif"}</Heading>
                     <Box>
