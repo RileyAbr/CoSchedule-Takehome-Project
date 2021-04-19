@@ -2,7 +2,7 @@ const RankingsModel = require("../models/rankings.model");
 
 exports.insert = (req, res) => {
     RankingsModel.createRanking(req.body).then((result) => {
-        res.status(201).send({ id: result._id });
+        res.status(201).send(result);
     });
 };
 
